@@ -2,7 +2,7 @@
 
 ## Table of Contents
 
-- [metal-soy-critic](#metal-soy-critic)
+- [Metal Soy Critic](#metal-soy-critic)
 - [Params](#params)
 	- [Naming Params](#naming-params)
 	- [Declaring Params](#declaring-params)
@@ -21,17 +21,19 @@
 ---
 
 
-## metal-soy-critic
+## Metal Soy Critic
 
-Every soy component should pass metal-soy-critic validation. See documentation [here](https://github.com/mthadley/metal-soy-critic).
+Every soy component should pass [metal-soy-critic](ttps://github.com/mthadley/metal-soy-critic).
 
 ## Params
 
 ### Naming Params
 
-Private attributes should be named with a leading underscore (`_count`,
-`_myName`, etc.), should use the `internal()` flag in the `.js`, and will need to be
-declared as optional in the template (`@{param? name: string}`).
+Private attributes:
+
+- Should be named with a leading underscore (`_count`, `_myName`, etc.)
+- Should use the `internal()` flag in the `.js`
+- Will need to be declared as optional in the template (`@{param? name: string}`).
 
 *Hint: A function in the template will always be optional*
 
@@ -48,8 +50,7 @@ A function that will manage an event should be named prefixed with `_handle` fol
 ### Declaring Params
 
 Soy has two ways of declaring parameters to a template: in it's soydoc comment
-or using the `@param` command. The soydoc comment style has been deprecated (see
-[here](https://developers.google.com/closure/templates/docs/deprecated_features)), so prefer the latter:
+or using the `@param` command. [The soydoc comment style has been deprecated](https://developers.google.com/closure/templates/docs/deprecated_features), so prefer the latter:
 
 ```soy
 {template myTemplate}
@@ -58,6 +59,7 @@ or using the `@param` command. The soydoc comment style has been deprecated (see
 	<h1>Hello {$name}!</h1>
 {/template}
 ```
+
 Keep all of the parameters in a single block, sorted alphabetically, with optional parameters coming
 after required. Most text editors make easy work of this since it should be the default order when the
 lines are run through a sorting routine.
@@ -119,7 +121,7 @@ Soy.
 * For **records**, there is a record syntax that would be useful, however it
 currently will lead to issues with your javascript component, so for the moment
 just use `?`, which will still allow member access using the `.` operator. See
-[this](https://github.com/metal/metal-tools-soy/issues/10) issue for the status for record type syntax for `metal-soy`.
+this [issue for the status for record type syntax for `metal-soy`](https://github.com/metal/metal-tools-soy/issues/10).
 
 ### Default values
 
@@ -136,7 +138,7 @@ values in your template:
 
 ## Handling attributes
 
-It is often the case that a component will need to handle adding to elements attributes given a variety of different conditions. Instead of trying to cram all of the logic onto a single line with manu `{if}`checks or ternarys, use a `{let}` with `kind="attributes"`.
+It is often the case that a component will need to handle adding to elements attributes given a variety of different conditions. Instead of trying to cram all of the logic onto a single line with many `{if}`checks or ternarys, use a `{let}` with `kind="attributes"`.
 
 ```soy
 /* bad */
@@ -162,7 +164,7 @@ It is often the case that a component will need to handle adding to elements att
 
 ### Handling one specific attribute
 
-There are also cases that only one of the element attributes will depends on given conditions. In this case use a `{let}` with `kind="text"`.
+There are also cases that only one of the element attributes will depend on given conditions. In this case use a `{let}` with `kind="text"`.
 
 ```soy
 /* bad */
@@ -215,8 +217,7 @@ problems, without any warnings. We know this from experience.
 
 It also makes reading the code much harder. Understanding which props are being
 used now requires exact knowledge of which params the component takes.
-Explicitly passing those props is much easier to read. To [quote](https://www.python.org/dev/peps/pep-0020/#id3)
-the *Zen of Python*, "Explicit is better than Implicit".
+Explicitly passing those props is much easier to read. To quote [the *Zen of Python*](https://www.python.org/dev/peps/pep-0020/#id3), "Explicit is better than Implicit".
 
 ```soy
 /* Bad */
