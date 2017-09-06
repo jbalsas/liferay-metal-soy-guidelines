@@ -1,0 +1,1 @@
+# liferay-metal-soy-guidelines
