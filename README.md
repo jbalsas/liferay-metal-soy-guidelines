@@ -1,5 +1,9 @@
 # liferay-metal-soy-guidelines
 
+## metal-soy-critic
+
+Every soy component should pass metal-soy-critic validation. See documentation [here](https://github.com/mthadley/metal-soy-critic).
+
 ## Params
 
 ### Naming Params
