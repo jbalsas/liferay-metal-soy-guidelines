@@ -1,5 +1,26 @@
 # liferay-metal-soy-guidelines
 
+## Table of Contents
+
+- [metal-soy-critic](#metal-soy-critic)
+- [Params](#params)
+	- [Naming Params](#naming-params)
+	- [Declaring Params](#declaring-params)
+	- [Default values](#default-values)
+- [Handling attributes](#handling-attributes)
+	- [Handling one specific attributes](#handling-one-specific-attribute)
+- [Calling Templates](#calling-templates)
+	- [Avoid data="all"](#avoid-dataall)
+	- [Events vs Function Props](#events-vs-function-props)
+	- [Ordering params passed](#ordering-params-passed)
+- [Source Formatting](#source-formatting)
+	- [Empty lines](#empty-lines)
+	- [Attributes in same line vs multiple lines](#attributes-in-same-line-vs-multiple-lines)
+
+
+---
+
+
 ## metal-soy-critic
 
 Every soy component should pass metal-soy-critic validation. See documentation [here](https://github.com/mthadley/metal-soy-critic).
