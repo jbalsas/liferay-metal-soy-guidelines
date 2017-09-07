@@ -274,12 +274,15 @@ As usual all params should be ordered alphabetically.
 {/template}
 ```
 
-Params with more than one line value should be treated as bocks and add a line break before the next one.
+Params with more than one line value should be treated as blocks and add a line break before the next one.
 
 ```soy
 {template myTemplate}
 	{param dialogClasses: 'msb-fragment-name-editor__dialog' /}
-	{param events: ['hide': $_handleModalHidden] /}
+	{param events: [
+		'hide': $_handleModalHidden
+		'show': $_handleModalShow
+	] /}
 
 	{param footer kind="html"}
 		<button class="btn btn-primary btn-default btn-lg" data-onclick="{$_handleSubmitForm}" type="button">
