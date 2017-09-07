@@ -40,11 +40,13 @@ Private attributes:
 A function that will manage an event should be named prefixed with `_handle` follow by the action that happens.
 
 ```soy
-{call Dropdown.render}
-	{param events: [
-		'selectedItemChanged': $_handleSelectedItemChanged
-	] /}
-{/call}
+{template myTemplate}
+	{call Dropdown.render}
+		{param events: [
+			'selectedItemChanged': $_handleSelectedItemChanged
+		] /}
+	{/call}
+{/template}
 ```
 
 ### Declaring Params
@@ -64,7 +66,7 @@ Keep all of the parameters in a single block, sorted alphabetically, with option
 after required. Most text editors make easy work of this since it should be the default order when the
 lines are run through a sorting routine.
 
-```
+```soy
 {namespace MyComponent}
 
 /**
@@ -81,6 +83,8 @@ lines are run through a sorting routine.
 	{@param? _handleHideCreateCard: any}
 	{@param? _handleShowCreateCard: any}
 	{@param? _showCreateCardModal: bool}
+
+{/template}
 ```
 
 In your javascript file, make sure that all params are listed in
@@ -129,11 +133,13 @@ Prefer the `?:` operator over the ternary (`? : `), when declaring default
 values in your template:
 
 ```soy
-/* Bad */
-<h1>{isNonnull($name) ? $name : 'Foo'}</h1>
+{template myTemplate}
+	/* Bad */
+	<h1>{isNonnull($name) ? $name : 'Foo'}</h1>
 
-/* Good */
-<h1>{$name ?: 'Foo'}</h1>
+	/* Good */
+	<h1>{$name ?: 'Foo'}</h1>
+{/template}
 ```
 
 ## Handling attributes
@@ -141,25 +147,27 @@ values in your template:
 It is often the case that a component will need to handle adding to elements attributes given a variety of different conditions. Instead of trying to cram all of the logic onto a single line with many `{if}`checks or ternarys, use a `{let}` with `kind="attributes"`.
 
 ```soy
-/* bad */
-<div class="btn {if $style}btn-{style}{else}btn-default{/if}" {if $id}id="{$id}{/if}>...</div>
+{template myTemplate}
+	/* bad */
+	<div class="btn {if $style}btn-{style}{else}btn-default{/if}" {if $id}id="{$id}{/if}>...</div>
 
-/* good */
-{let $attributes kind="attributes"}
-    class="btn
-        {if $style}
-            {sp}btn-{$style}
-        {else}
-            {sp}btn-default
-        {/if}
-    "
+	/* good */
+	{let $attributes kind="attributes"}
+	    class="btn
+		{if $style}
+		    {sp}btn-{$style}
+		{else}
+		    {sp}btn-default
+		{/if}
+	    "
 
-    {if $id}
-        id="{$id}
-    {/if}
-{/let}
+	    {if $id}
+		id="{$id}
+	    {/if}
+	{/let}
 
-<div {$attributes}>...</div>
+	<div {$attributes}>...</div>
+{/template}
 ```
 
 ### Handling one specific attribute
@@ -167,29 +175,31 @@ It is often the case that a component will need to handle adding to elements att
 There are also cases that only one of the element attributes will depend on given conditions. In this case use a `{let}` with `kind="text"`.
 
 ```soy
-/* bad */
-<div class="my-component modifier-class{if $foo} some-class{/if}{if $bar} some-bar{/if}{if $baz} some-baz{/if}"></div>
+{template myTemplate}
+	/* bad */
+	<div class="my-component modifier-class{if $foo} some-class{/if}{if $bar} some-bar{/if}{if $baz} some-baz{/if}"></div>
 
-/* good */
-{let $classes kind="text"}
-	my-component
+	/* good */
+	{let $classes kind="text"}
+		my-component
 
-	{sp}modifier-class
+		{sp}modifier-class
 
-	{if $foo}
-		{sp}some-class
-	{/if}
+		{if $foo}
+			{sp}some-class
+		{/if}
 
-	{if $bar}
-		{sp}some-bar
-	{/if}
+		{if $bar}
+			{sp}some-bar
+		{/if}
 
-	{if $baz}
-		{sp}some-baz
-	{/if}
-{/let}
+		{if $baz}
+			{sp}some-baz
+		{/if}
+	{/let}
 
-<div class="{$classes}"></div>
+	<div class="{$classes}"></div>
+{/template}
 ```
 
 We also make sure to explicitly add spaces using the `{sp}` command. It has the
@@ -220,15 +230,17 @@ used now requires exact knowledge of which params the component takes.
 Explicitly passing those props is much easier to read. To quote [the *Zen of Python*](https://www.python.org/dev/peps/pep-0020/#id3), "Explicit is better than Implicit".
 
 ```soy
-/* Bad */
-{call .profile data="all" /}
+{template myTemplate}
+	/* Bad */
+	{call .profile data="all" /}
 
-/* Good */
-{call .profile}
-	{param name: $name /}
-	{param lastName: $lastName /}
-	{param phone: $phone /}
-{/call}
+	/* Good */
+	{call .profile}
+		{param name: $name /}
+		{param lastName: $lastName /}
+		{param phone: $phone /}
+	{/call}
+{/tempalte}
 ```
 
 ### Events vs Function Props
@@ -237,15 +249,19 @@ Prefer using the `events` prop and calling `this.emit()` internally, instead of
 passing functions as props:
 
 ```soy
-/* Bad */
-{call MyEditor.render}
-	{param onChange: $_handleChange /}
-{/call}
+{template myTemplate}
+	/* Bad */
+	{call MyEditor.render}
+		{param onChange: $_handleChange /}
+	{/call}
 
-/* Good */
-{call MyEditor.render}
-	{param events: ['change': $_handleChange] /}
-{/call}
+	/* Good */
+	{call MyEditor.render}
+		{param events: [
+			'change': $_handleChange
+		] /}
+	{/call}
+{/template}
 ```
 
 ### Ordering params passed
@@ -253,15 +269,17 @@ passing functions as props:
 As usual all params should be alphabetically ordered with the exception of `events` param, which should be placed on top of them.
 
 ```soy
-{call Button.render}
-	{param events: [
-		'click': $_handleButtonClicked
-	] /}
-	{param ariaLabel: 'My Button'}
-	{param disabled: false /}
-	{param id: 'myButtonId' /}
-	{param label: 'My Button' /}
-{/call}
+{template myTemplate}
+	{call Button.render}
+		{param events: [
+			'click': $_handleButtonClicked
+		] /}
+		{param ariaLabel: 'My Button'}
+		{param disabled: false /}
+		{param id: 'myButtonId' /}
+		{param label: 'My Button' /}
+	{/call}
+{/template}
 ```
 
 ## Source Formatting
@@ -271,15 +289,17 @@ As usual all params should be alphabetically ordered with the exception of `even
 An empty line should be placed after every block when next one is at the same identation level.
 
 ```soy
-<div class="wrapper">
-	<h3 class="modal-title">
-		{msg desc=""}add-fragment{/msg}
-	</h3>
+{template myTemplate}
+	<div class="wrapper">
+		<h3 class="modal-title">
+			{msg desc=""}add-fragment{/msg}
+		</h3>
 
-	<div class="my-block">
-		...
+		<div class="my-block">
+			...
+		</div>
 	</div>
-</div>
+{/template}
 ```
 
 ### Attributes in same line vs multiple lines
@@ -287,14 +307,16 @@ An empty line should be placed after every block when next one is at the same id
 If an element has more than two attributes place each one in a different line.
 
 ```soy
-<h1 class="my-class" id="myId">
-	Title
-<h1>
+{template myTemplate}
+	<h1 class="my-class" id="myId">
+		Title
+	<h1>
 
-<button
-	class="{$buttonClasses}"
-	data-onclick="{$_handlePreviewSizeButtonClick}"
-	type="button"
-	value="myValue"
->
+	<button
+		class="{$buttonClasses}"
+		data-onclick="{$_handlePreviewSizeButtonClick}"
+		type="button"
+		value="myValue"
+	>
+{/template}
 ```
