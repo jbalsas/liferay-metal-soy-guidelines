@@ -17,9 +17,7 @@
 	- [Empty lines](#empty-lines)
 	- [Attributes in same line vs multiple lines](#attributes-in-same-line-vs-multiple-lines)
 
-
 ---
-
 
 ## Metal Soy Critic
 
@@ -42,9 +40,7 @@ A function that will manage an event should be named prefixed with `_handle` fol
 ```soy
 {template myTemplate}
 	{call Dropdown.render}
-		{param events: [
-			'selectedItemChanged': $_handleSelectedItemChanged
-		] /}
+		{param events: ['selectedItemChanged': $_handleSelectedItemChanged] /}
 	{/call}
 {/template}
 ```
@@ -236,8 +232,8 @@ Explicitly passing those props is much easier to read. To quote [the *Zen of Pyt
 
 	/* Good */
 	{call .profile}
-		{param name: $name /}
 		{param lastName: $lastName /}
+		{param name: $name /}
 		{param phone: $phone /}
 	{/call}
 {/tempalte}
@@ -257,28 +253,50 @@ passing functions as props:
 
 	/* Good */
 	{call MyEditor.render}
-		{param events: [
-			'change': $_handleChange
-		] /}
+		{param events: ['change': $_handleChange] /}
 	{/call}
 {/template}
 ```
 
-### Ordering params passed
+### Passing Params to Templates
 
-As usual all params should be alphabetically ordered with the exception of `events` param, which should be placed on top of them.
+As usual all params should be ordered alphabetically.
 
 ```soy
 {template myTemplate}
 	{call Button.render}
-		{param events: [
-			'click': $_handleButtonClicked
-		] /}
 		{param ariaLabel: 'My Button' /}
 		{param disabled: false /}
+		{param events: ['click': $_handleButtonClicked] /}
 		{param id: 'myButtonId' /}
 		{param label: 'My Button' /}
 	{/call}
+{/template}
+```
+
+Params with more than one line value should be treated as blocks and add a line break before the next one.
+
+```soy
+{template myTemplate}
+	{param dialogClasses: 'msb-fragment-name-editor__dialog' /}
+	{param events: [
+		'hide': $_handleModalHidden
+		'show': $_handleModalShow
+	] /}
+
+	{param footer kind="html"}
+		<button class="btn btn-primary btn-default btn-lg" data-onclick="{$_handleSubmitForm}" type="button">
+			<span class="lfr-btn-label">
+				{msg desc=""}save{/msg}
+			</span>
+		</button>
+	{/param}
+
+	{param header kind="html"}
+		<h3 class="modal-title">
+			{msg desc=""}add-fragment{/msg}
+		</h3>
+	{/param}
 {/template}
 ```
 
