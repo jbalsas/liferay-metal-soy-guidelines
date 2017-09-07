@@ -274,7 +274,7 @@ As usual all params should be alphabetically ordered with the exception of `even
 		{param events: [
 			'click': $_handleButtonClicked
 		] /}
-		{param ariaLabel: 'My Button'}
+		{param ariaLabel: 'My Button' /}
 		{param disabled: false /}
 		{param id: 'myButtonId' /}
 		{param label: 'My Button' /}
