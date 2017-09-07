@@ -23,7 +23,7 @@
 
 ## Metal Soy Critic
 
-Every soy component should pass [metal-soy-critic](ttps://github.com/mthadley/metal-soy-critic).
+Every soy component should pass [metal-soy-critic](https://github.com/mthadley/metal-soy-critic).
 
 ## Params
 
