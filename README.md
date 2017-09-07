@@ -118,10 +118,6 @@ When specifying types of params, try to be consistent and use the correct types:
 * For **primitives**, use (`string`, `number`, etc.). `Map`s and `List`s should use `map<T, U>` and `list<T>`.
 * For **functions**, use the `any` type, since there is no native function type for
 Soy.
-* For **records**, there is a record syntax that would be useful, however it
-currently will lead to issues with your javascript component, so for the moment
-just use `?`, which will still allow member access using the `.` operator. See
-this [issue for the status for record type syntax for `metal-soy`](https://github.com/metal/metal-tools-soy/issues/10).
 
 ### Default values
 
